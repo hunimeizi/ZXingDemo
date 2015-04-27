@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/edit_string"
+        android:layout_width="fill_parent"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/button_erweima"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_below="@+id/edit_string"
+        android:text="生成二维码" />
+
+    <Button
+        android:id="@+id/button_saomiao"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_below="@+id/button_erweima"
+        android:text="扫描" />
+</RelativeLayout>

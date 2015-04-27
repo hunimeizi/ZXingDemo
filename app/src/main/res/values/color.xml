@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="loading_transparent">#00000000</color>
+    <color name="gray">#d0000000</color>
+    <color name="alpha">#00000000</color>
+    <color name="title_bar_bg">#ffc915</color>
+    <color name="all_bg">#f2f2f2</color>
+    <color name="whitle">#ffffff</color>
+    <color name="zitiys">#fcb215</color>
+    <color name="zitiyse">#b74500</color>
+    <color name="white">#ffffff</color>
+    <color name="gold">#b89766</color>
+    <color name="hese">#782f01</color>
+    <color name="juhuangse">#fcd87a</color>
+    <color name="black">#000000</color>
+    <color name="li_ery">#212121</color>
+    <color name="red">#ff0000</color>
+    <color name="light_gray">#5d5d5d</color>
+    <color name="gray_list">#f7f7f7</color>
+    <color name="text_color">#782f01</color>
+    <color name="home_text_color">#fbc974</color>
+    <color name="home_text_color1">#ffefd5</color>
+    <color name="welcome_color">#fff4cb</color>
+    <color name="version_color">#c17907</color>
+    <color name="jifen_color">#896606</color>
+    <color name="beizhu_color">#606060</color>
+
+    <drawable name="login_btn_text_pressed">#ffffff</drawable>
+    <drawable name="login_btn_text_focused">#ffffff</drawable>
+    <drawable name="zuixinjiaoyi_text_p">#ffffff</drawable>
+    <drawable name="zuixinjiaoyi_text_f">#8abbca</drawable>
+
+    <color name="result_image_border">#ffffffff</color>
+    <color name="alpha_0f">#0f1f1f1f</color>
+    <color name="result_points">#c000ff00</color>
+    <color name="transparent">#00000000</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="result_view">#b0000000</color>
+    <color name="green">#8ec700</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="shopcart_price_back">#fff2c7</color>
+    <color name="transparent_background">#50000000</color>
+    <color name="tradingfloor_listitem_maichu">#d49e5e</color>
+    <color name="Light_gray">#c4c2c2</color>
+    <color name="tradingfloor_listitem_mairu">#628a70</color>
+    <color name="shoplist_gray_color">#66b0b0b0</color>
+    
+    <color name="click">#4cffffff</color>
+
+</resources>
