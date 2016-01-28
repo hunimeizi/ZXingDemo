@@ -11,28 +11,36 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.FormatException;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Hashtable;
 
 import zxingdemo.lyb.com.zxingdemo.utils.LogCat;
 import zxingdemo.lyb.com.zxingdemo.utils.PhoneUitls;
+import zxingdemo.lyb.com.zxingdemo.utils.RGBLuminanceSource;
 
 /**
- * Created by MyPC on 2015/4/27.
+ *
  */
 public class ZXingQRCodeActivity extends Activity {
 
-    private ImageButton imgbtn_delete;
     private ImageView iv_erweima;
-    private Intent it;
-    private String editString;
     private int eqcorewith;
-    private long mLastTime, mCurTime;
+    private long mCurTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +56,7 @@ public class ZXingQRCodeActivity extends Activity {
     }
 
     private void initView() {
-        imgbtn_delete = (ImageButton) findViewById(R.id.imgbtn_delete);
+        ImageButton imgbtn_delete = (ImageButton) findViewById(R.id.imgbtn_delete);
         imgbtn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +65,8 @@ public class ZXingQRCodeActivity extends Activity {
         });
         iv_erweima = (ImageView) findViewById(R.id.iv_erweima);
         iv_erweima.setOnTouchListener(new onDoubleClick());
-        it = getIntent();
+        Intent it = getIntent();
+        String editString;
         if (it != null) {
             editString = it.getStringExtra("EditString");
         } else {
@@ -65,6 +74,18 @@ public class ZXingQRCodeActivity extends Activity {
         }
         LogCat.lyb("editString====" + editString);
         SetImageView(editString);
+        iv_erweima.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                final Result result = scanningImage();
+                if (result != null) {
+                    Toast.makeText(ZXingQRCodeActivity.this, result.getText().trim(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ZXingQRCodeActivity.this, "识别结果错误", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -75,7 +96,7 @@ public class ZXingQRCodeActivity extends Activity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (MotionEvent.ACTION_DOWN == event.getAction()) {
-                mLastTime = mCurTime;
+                long mLastTime = mCurTime;
                 mCurTime = System.currentTimeMillis();
                 if (mCurTime - mLastTime < 1000) {
                     ZXingQRCodeActivity.this.finish();
@@ -95,9 +116,7 @@ public class ZXingQRCodeActivity extends Activity {
         try {
             bmp = createBitmap(Create2DCode(content));
             iv_erweima.setImageBitmap(bmp);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (WriterException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -105,8 +124,8 @@ public class ZXingQRCodeActivity extends Activity {
     /**
      * 生成固定大小的图片
      *
-     * @param src
-     * @return
+     * @param src Bitmap
+     * @return Bitmap
      */
     private Bitmap createBitmap(Bitmap src) {
         if (src == null) {
@@ -129,7 +148,7 @@ public class ZXingQRCodeActivity extends Activity {
     /**
      * 生成二维矩阵,编码时指定大小
      *
-     * @param str
+     * @param str String
      * @return bitmap
      * @throws WriterException
      * @throws UnsupportedEncodingException
@@ -154,5 +173,29 @@ public class ZXingQRCodeActivity extends Activity {
         // 通过像素数组生成bitmap,具体参考api
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
         return bitmap;
+    }
+
+
+    /**
+     * 识别二维码
+     *
+     * @return Result
+     */
+    public Result scanningImage() {
+        if (bmp == null) {
+            return null;
+        }
+        Hashtable<DecodeHintType, String> hints = new Hashtable<>();
+        hints.put(DecodeHintType.CHARACTER_SET, "UTF8"); // 设置二维码内容的编码
+        RGBLuminanceSource source;
+        try {
+            source = new RGBLuminanceSource(bmp);
+            BinaryBitmap bitmap1 = new BinaryBitmap(new HybridBinarizer(source));
+            QRCodeReader reader = new QRCodeReader();
+            return reader.decode(bitmap1, hints);
+        } catch (NotFoundException | ChecksumException | FormatException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
